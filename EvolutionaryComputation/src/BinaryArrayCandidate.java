@@ -12,14 +12,21 @@ public class BinaryArrayCandidate implements Candidate{
 		}
 		this.length = length;
 	}
+	
+	public BinaryArrayCandidate(int length, int[] binaryArray){
+		this.binaryArr = binaryArray;
+		this.length = length;
+	}
 
-	public void crossOver(Candidate b) {
+	public Candidate[] crossOver(Candidate b) {
 		int crossoverPoint = rand.nextInt(length);
-		int[] tmpA = this.binaryArr.clone();
+		BinaryArrayCandidate copyA = (BinaryArrayCandidate) this.makeCopy();
+		BinaryArrayCandidate copyB = (BinaryArrayCandidate) b.makeCopy();
 		for (int i = crossoverPoint; i < this.length; i++) {
-			this.binaryArr[i] = ((BinaryArrayCandidate) b).binaryArr[i];
-			((BinaryArrayCandidate) b).binaryArr[i] = tmpA[i];
+			copyA.binaryArr[i] = ((BinaryArrayCandidate) copyB).binaryArr[i];
+			((BinaryArrayCandidate) copyB).binaryArr[i] = this.binaryArr[i];
 		}
+		return new Candidate[]{copyA, copyB};
 	}
 
 	public void mutate(int bitsToFlip) {
@@ -35,5 +42,9 @@ public class BinaryArrayCandidate implements Candidate{
 			fitness += binaryArr[i];
 		}
 		return fitness;
+	}
+
+	public Candidate makeCopy(){
+		return new BinaryArrayCandidate(this.length, this.binaryArr);
 	}
 }

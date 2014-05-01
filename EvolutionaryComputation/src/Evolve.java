@@ -16,10 +16,17 @@ public class Evolve {
 		for(int i =0; i < population.length; i++){
 			sortedMap.put(population[i].getFitness(), population[i]);
 		}
-		
+		Candidate[] passedOnPopulation = new Candidate[population.length];
+		int counter = 0;
 		for(int i = population.length - passOnSetSize; i < population.length; i++){
+			passedOnPopulation[counter] = population[i];
+			counter++;
+		}
+		Candidate[] newPopulation = new Candidate[population.length];
+		for(int i = passOnSetSize; i < population.length; i++){
 			
 		}
+		
 	}
 	
 	public void writeToFile(String toWrite, String fileName){
