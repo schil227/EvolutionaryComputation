@@ -18,22 +18,23 @@ public class BinaryArrayCandidate implements Candidate{
 		this.length = length;
 	}
 
-	public Candidate[] crossOver(Candidate b) {
+	public Candidate crossOver(Candidate b) {
 		int crossoverPoint = rand.nextInt(length);
 		BinaryArrayCandidate copyA = (BinaryArrayCandidate) this.makeCopy();
 		BinaryArrayCandidate copyB = (BinaryArrayCandidate) b.makeCopy();
 		for (int i = crossoverPoint; i < this.length; i++) {
 			copyA.binaryArr[i] = ((BinaryArrayCandidate) copyB).binaryArr[i];
-			((BinaryArrayCandidate) copyB).binaryArr[i] = this.binaryArr[i];
 		}
-		return new Candidate[]{copyA, copyB};
+		return copyA;
 	}
 
-	public void mutate(int bitsToFlip) {
+	public Candidate mutate(int bitsToFlip) {
 		int index = rand.nextInt(length);
+		BinaryArrayCandidate copy = (BinaryArrayCandidate) this.makeCopy();
 		for (int i = 0; i < bitsToFlip; i++) {
-			this.binaryArr[index] = (this.binaryArr[index] + 1) % 2;
+			copy.binaryArr[index] = (copy.binaryArr[index] + 1) % 2;
 		}
+		return copy;
 	}
 
 	public int getFitness(){
