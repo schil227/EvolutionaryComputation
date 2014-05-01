@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-public class BinaryArrayCandidate {
+public class BinaryArrayCandidate implements Candidate{
 	Random rand = new Random();
 	int[] binaryArr;
 	int length;
@@ -13,12 +13,12 @@ public class BinaryArrayCandidate {
 		this.length = length;
 	}
 
-	public void crossOver(BinaryArrayCandidate b) {
+	public void crossOver(Candidate b) {
 		int crossoverPoint = rand.nextInt(length);
 		int[] tmpA = this.binaryArr.clone();
 		for (int i = crossoverPoint; i < this.length; i++) {
-			this.binaryArr[i] = b.binaryArr[i];
-			b.binaryArr[i] = tmpA[i];
+			this.binaryArr[i] = ((BinaryArrayCandidate) b).binaryArr[i];
+			((BinaryArrayCandidate) b).binaryArr[i] = tmpA[i];
 		}
 	}
 
