@@ -1,12 +1,14 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
-public class BinaryArrayCandidate implements Candidate{
+public class BinaryArrayCandidate implements Candidate, Comparable{
 	Random rand = new Random();
 	int[] binaryArr;
 	int length;
 
 	public BinaryArrayCandidate(int length) {
+		binaryArr = new int[length];
 		for (int i = 0; i < length; i++) {
 			binaryArr[i] = rand.nextInt(2);
 		}
@@ -46,6 +48,21 @@ public class BinaryArrayCandidate implements Candidate{
 	}
 
 	public Candidate makeCopy(){
-		return new BinaryArrayCandidate(this.length, this.binaryArr);
+		return new BinaryArrayCandidate(this.length, Arrays.copyOf(this.binaryArr, this.length));
+	}
+	
+	public String getString(){
+		return binaryArr.toString();
+	}
+
+//	@Override
+	public int compareTo(Candidate a) {
+		return ((BinaryArrayCandidate) a).getFitness() - this.getFitness();
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		// TODO Auto-generated method stub
+		return ((BinaryArrayCandidate) o).getFitness() - this.getFitness();
 	}
 }

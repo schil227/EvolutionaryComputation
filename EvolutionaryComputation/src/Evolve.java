@@ -2,52 +2,52 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Map;
 import java.util.Random;
+import java.util.SortedMap;
 import java.util.TreeMap;
 
 public class Evolve {
 	static Random rand = new Random();
 
 	public static void main(String[] args) {
-		int numCandidates = 100;
+		int numCandidates = 60;
 		Candidate[] initialPopulation = new Candidate[numCandidates];
 		for (int i = 0; i < numCandidates; i++) {
 			initialPopulation[i] = new BinaryArrayCandidate(100);
 		}
-		EvolveCandidates(initialPopulation, 20, 5, 5, 100,
-				"BinaryArrayTest1.txt");
+		EvolveCandidates(initialPopulation, 20, 5, 5, 1000,"BinaryArrayTest1");
 	}
 
-	public static void EvolveCandidates(Candidate[] population,
-			int passOnSetSize, int numMutations, int mutationRate,
-			int iterationCount, String fileName) {
-		TreeMap<Integer, Candidate> sortedMap = new TreeMap<Integer, Candidate>();
+	public static void EvolveCandidates(Candidate[] population, int passOnSetSize, int numMutations, int mutationRate, int iterationCount, String fileName) {
+
+//		Arrays.sort(population);
+		
 		while (iterationCount > 0) {
-			for (int i = 0; i < population.length; i++) {
-				sortedMap.put(population[i].getFitness(), population[i]);
-			}
-			Candidate[] passedOnPopulation = new Candidate[population.length];
-			int counter = 0;
-			writeToFile("Iteration: " + iterationCount + ", top fitness:"
-					+ population[population.length - 1].getFitness() + "\n",
-					fileName);
-			for (int i = population.length - passOnSetSize; i < population.length; i++) {
-				passedOnPopulation[counter] = population[i];
-				counter++;
-			}
+			Arrays.sort(population);
+			System.out.println("Top fitness: " + population[0].getFitness());
+//			for(int i = 0; i < population.length; i++){
+//				System.out.println("Fitness:"+ population[i].getFitness());
+//			}
+//			System.out.println("will save:");
+//			for(int i = 0; i < passOnSetSize; i++){
+//				System.out.println("+Fitness:"+ population[i].getFitness());
+//			}
+			
+			
 			for (int i = passOnSetSize + 1; i < population.length; i++) {
 				if (rand.nextInt(100) >= mutationRate) { // crossover
-					passedOnPopulation[i] = passedOnPopulation[rand
-							.nextInt(passOnSetSize)]
-							.crossOver(passedOnPopulation[rand
-									.nextInt(passOnSetSize)]);
+					population[i] = population[rand.nextInt(passOnSetSize)].crossOver(population[rand.nextInt(passOnSetSize)]);
 				} else { // mutate
-					passedOnPopulation[i] = passedOnPopulation[rand
-							.nextInt(passOnSetSize)].mutate(numMutations);
+					population[i] = population[rand.nextInt(passOnSetSize)].mutate(numMutations);
 				}
 			}
+			iterationCount--;
 
 		}
+		System.out.println("End. Top fitness:"+ population[0].getFitness()+ ", Candidate: " + population[passOnSetSize]);
 	}
 
 	public static void writeToFile(String toWrite, String fileName) {
