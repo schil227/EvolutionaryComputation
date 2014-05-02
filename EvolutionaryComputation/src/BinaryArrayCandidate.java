@@ -52,13 +52,18 @@ public class BinaryArrayCandidate implements Candidate, Comparable{
 	}
 	
 	public String getString(){
-		return binaryArr.toString();
+		String result = "[";
+		for(int i = 0; i < binaryArr.length; i++){
+			result += binaryArr[i];
+			if(i + 1 != binaryArr.length){
+				result +=", ";
+			}
+		}
+		result += "]";
+		
+		return result;
 	}
 
-//	@Override
-	public int compareTo(Candidate a) {
-		return ((BinaryArrayCandidate) a).getFitness() - this.getFitness();
-	}
 
 	@Override
 	public int compareTo(Object o) {

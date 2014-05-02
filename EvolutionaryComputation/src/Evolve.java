@@ -18,7 +18,7 @@ public class Evolve {
 		for (int i = 0; i < numCandidates; i++) {
 			initialPopulation[i] = new BinaryArrayCandidate(100);
 		}
-		EvolveCandidates(initialPopulation, 20, 5, 5, 1000,"BinaryArrayTest1");
+		EvolveCandidates(initialPopulation, 20, 5, 5, 250,"BinaryArrayTest1");
 	}
 
 	public static void EvolveCandidates(Candidate[] population, int passOnSetSize, int numMutations, int mutationRate, int iterationCount, String fileName) {
@@ -27,15 +27,7 @@ public class Evolve {
 		
 		while (iterationCount > 0) {
 			Arrays.sort(population);
-			System.out.println("Top fitness: " + population[0].getFitness());
-//			for(int i = 0; i < population.length; i++){
-//				System.out.println("Fitness:"+ population[i].getFitness());
-//			}
-//			System.out.println("will save:");
-//			for(int i = 0; i < passOnSetSize; i++){
-//				System.out.println("+Fitness:"+ population[i].getFitness());
-//			}
-			
+			System.out.println("Top fitness: " + population[0].getFitness() + "Candidate: " + population[passOnSetSize].getString());
 			
 			for (int i = passOnSetSize + 1; i < population.length; i++) {
 				if (rand.nextInt(100) >= mutationRate) { // crossover
@@ -47,7 +39,7 @@ public class Evolve {
 			iterationCount--;
 
 		}
-		System.out.println("End. Top fitness:"+ population[0].getFitness()+ ", Candidate: " + population[passOnSetSize]);
+		System.out.println("End. Top fitness:"+ population[0].getFitness()+ ", Candidate: " + population[0].getString());
 	}
 
 	public static void writeToFile(String toWrite, String fileName) {

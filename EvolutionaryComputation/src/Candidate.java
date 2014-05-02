@@ -5,5 +5,4 @@ public interface Candidate{
   public Candidate mutate(int numMutations);
   public Candidate makeCopy();
   public String getString();
-  public int compareTo(Candidate a);
 }
