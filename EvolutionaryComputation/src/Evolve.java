@@ -16,18 +16,18 @@ public class Evolve {
 		int numCandidates = 60;
 		Candidate[] initialPopulation = new Candidate[numCandidates];
 		for (int i = 0; i < numCandidates; i++) {
-			initialPopulation[i] = new BinaryArrayCandidate(100);
+			initialPopulation[i] = new BinaryArrayCandidate(1000);
 		}
-		EvolveCandidates(initialPopulation, 20, 5, 5, 250,"BinaryArrayTest1");
+		EvolveCandidates(initialPopulation, 20, 5, 5, 4100,"BinaryArrayTest1");
 	}
 
 	public static void EvolveCandidates(Candidate[] population, int passOnSetSize, int numMutations, int mutationRate, int iterationCount, String fileName) {
 
 //		Arrays.sort(population);
 		
-		while (iterationCount > 0) {
+		while (iterationCount > 0 && !population[0].isMaxFitness()) {
 			Arrays.sort(population);
-			System.out.println("Top fitness: " + population[0].getFitness() + "Candidate: " + population[passOnSetSize].getString());
+			System.out.println("Top fitness: " + population[0].getFitness() + ", Iteration: " + iterationCount + ", Candidate: " + population[passOnSetSize].getString());
 			
 			for (int i = passOnSetSize + 1; i < population.length; i++) {
 				if (rand.nextInt(100) >= mutationRate) { // crossover

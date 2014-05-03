@@ -24,8 +24,15 @@ public class BinaryArrayCandidate implements Candidate, Comparable{
 		int crossoverPoint = rand.nextInt(length);
 		BinaryArrayCandidate copyA = (BinaryArrayCandidate) this.makeCopy();
 		BinaryArrayCandidate copyB = (BinaryArrayCandidate) b.makeCopy();
+		int direction = rand.nextInt(2);
+		if(direction==0){
 		for (int i = crossoverPoint; i < this.length; i++) {
 			copyA.binaryArr[i] = ((BinaryArrayCandidate) copyB).binaryArr[i];
+		}
+		}else{
+			for (int i = 0; i < crossoverPoint; i++) {
+				copyA.binaryArr[i] = ((BinaryArrayCandidate) copyB).binaryArr[i];
+			}	
 		}
 		return copyA;
 	}
@@ -69,5 +76,10 @@ public class BinaryArrayCandidate implements Candidate, Comparable{
 	public int compareTo(Object o) {
 		// TODO Auto-generated method stub
 		return ((BinaryArrayCandidate) o).getFitness() - this.getFitness();
+	}
+
+	@Override
+	public boolean isMaxFitness() {
+		return this.getFitness() == this.length;
 	}
 }
